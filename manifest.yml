@@ -18,7 +18,6 @@ spec:
       containers:
         - name: reactive-echo
           image: mrflick72/reactive-echo:latest
-
           ports:
             - containerPort: 8080
 
@@ -45,7 +44,6 @@ kind: Ingress
 metadata:
   name: reactive-echo
   namespace: reactive-echo
-
 spec:
   rules:
     - http:
