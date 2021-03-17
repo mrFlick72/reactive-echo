@@ -1,0 +1,59 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: reactive-echo
+  name: reactive-echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reactive-echo
+  template:
+    metadata:
+      labels:
+        app: reactive-echo
+    spec:
+      containers:
+        - name: reactive-echo
+          image: mrflick72/reactive-echo:latest
+
+          ports:
+            - containerPort: 8080
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: reactive-echo
+  namespace: reactive-echo
+spec:
+  selector:
+    app: reactive-echo
+  ports:
+    - name: online
+      port: 8080
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reactive-echo
+  namespace: reactive-echo
+
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /reactive-echo/(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: reactive-echo
+                port:
+                  number: 8080
