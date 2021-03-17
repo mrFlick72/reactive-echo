@@ -16,7 +16,6 @@ jobs:
             java -version
       - checkout
 
-      - run:
       - run: mvn clean install -T2C
 
       - run:
